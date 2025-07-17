@@ -25,5 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('wellness/', include('wellness_hub_app.urls')),
     path('chatbot/', include('ai_chatbot_app.urls')),
+    path('users/', include('users_app.urls')),
     path('', placeholder_view, name='placeholder_home'),  # Placeholder homepage
 ]

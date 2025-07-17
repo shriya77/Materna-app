@@ -9,6 +9,9 @@ maVenv/
 instance/
 *.db
 
+# Firebase service account (sensitive credentials)
+backend/Materna/firebase-service-account.json
+
 # Node
 node_modules/
 build/
