@@ -1,5 +1,4 @@
 from django.db import models
-from users_app.models import CustomUserProfile
 from django.conf import settings
 
 # Create your models here.
