@@ -3,17 +3,11 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class CustomUserProfile(AbstractUser):
-    """ Extension of the default user model to include additional fields. 
-    
-    Extra Fields (TODO: Update as needed):
+    """Extension of the default user model to include additional fields."""
 
-    due_date: For pregnant users, the expected due date of their child.
-
-    pregancy_week: The current week of pregnancy, calculated from the due date.
-
-    doctor_info: Information about the user's doctor, such as name and contact details.
-    """
-
+    firebase_uid = models.CharField(max_length=128, unique=True, null=True, blank=True, help_text="Firebase UID for authentication.")
+    age = models.PositiveIntegerField(null=True, blank=True, help_text="User's age.")
+    trimester = models.PositiveSmallIntegerField(null=True, blank=True, help_text="Current trimester (1, 2, or 3).")
     due_date = models.DateField(null=True, blank=True, help_text="Expected due date for pregnant users.")
     pregnancy_week = models.PositiveIntegerField(null=True, blank=True, help_text="Current week of pregnancy.")
     doctor_info = models.TextField(null=True, blank=True, help_text="Information about the user's doctor.")
