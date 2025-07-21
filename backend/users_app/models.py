@@ -12,5 +12,6 @@ class CustomUserProfile(AbstractUser):
     pregnancy_week = models.PositiveIntegerField(null=True, blank=True, help_text="Current week of pregnancy.")
     doctor_info = models.TextField(null=True, blank=True, help_text="Information about the user's doctor.")
 
+    
     def __str__(self):
         return self.username
