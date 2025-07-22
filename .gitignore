@@ -11,6 +11,7 @@ instance/
 
 # Firebase service account (sensitive credentials)
 backend/Materna/firebase-service-account.json
+backend/Materna/firebase-test.html
 
 # Node
 node_modules/
