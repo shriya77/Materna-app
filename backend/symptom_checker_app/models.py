@@ -1,38 +1,44 @@
 from django.db import models
 from django.conf import settings
 
-# Create your models here.
 
+class SymptomLog(models.Model):
+    SYMPTOM_TYPES = [
+        ('headache', 'Headache'),
+        ('nausea', 'Nausea'),
+        ('fatigue', 'Fatigue'),
+        # Add more types as needed
+    ]
 
-class Symptom(models.Model):
-    """
-    Model for representing symtoms.
+    SEVERITY_CHOICES = [
+        (1, 'Mild'),
+        (2, 'Moderate'),
+        (3, 'Severe'),
+    ]
 
-    Fields:
-
-    user: ForeignKey to CustomUserProfile, linking the symptom to a user.
-
-    Name: CharField for the name of the symptom.
-
-    Description: TextField for a detailed description of the symptom.
-
-    Date: DateTimeField for when the symptom was recorded.
-
-    Time: TimeField for the time when the symptom was recorded.
-
-    Severity: IntegerField to indicate the severity of the symptom, with a range from 1 to 10.
-
-    Notes: TextField for any additional notes related to the symptom.
-    
-    """
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='symptoms')
-    name = models.CharField(max_length=255, help_text="Name of the symptom.")
-    description = models.TextField(help_text="Detailed description of the symptom.")
-    date = models.DateTimeField(auto_now_add=True, help_text="Date and time when the symptom was recorded.")
-    time = models.TimeField(auto_now_add=True, help_text="Time when the symptom was recorded.")
-    severity = models.IntegerField(default=1, help_text="Severity of the symptom on a scale from 1 to 10.")
-    notes = models.TextField(null=True, blank=True, help_text="Additional notes related to the symptom.")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        help_text="User who logged the symptom."
+    )
+    type = models.CharField(
+        max_length=50,
+        choices=SYMPTOM_TYPES,
+        help_text="Type of symptom (e.g., headache, nausea, fatigue)."
+    )
+    severity = models.IntegerField(
+        choices=SEVERITY_CHOICES,
+        help_text="Severity of the symptom: 1=Mild, 2=Moderate, 3=Severe."
+    )
+    frequency = models.CharField(
+        max_length=50,
+        help_text="Frequency of the symptom (e.g., daily, weekly)."
+    )
+    timestamp = models.DateTimeField(
+        auto_now_add=True,
+        help_text="Timestamp when the symptom was logged."
+    )
 
     def __str__(self):
-        return self.name + " - " + self.description[:50]  # Return a string representation of the symptom with name and a snippet of the description
+        return f"{self.user} - {self.type} ({self.severity})"
+
