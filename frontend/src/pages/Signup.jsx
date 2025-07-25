@@ -1,38 +1,44 @@
-import React, { useState, useEffect } from "react";
+import selfCareImage from "../assets/self-care.svg";
+import trackerImage from "../assets/tracker.svg";
+import needs from "../assets/needs.svg";
+import connect from "../assets/connect.svg";
+import welcome from "../assets/welcome.svg";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
   const slides = [
     {
       title: "Track your symptoms effortlessly",
-      image: "https://via.placeholder.com/150?text=Track",
+      image: trackerImage,
     },
     {
       title: "Personalize your care routine",
-      image: "https://via.placeholder.com/150?text=Care",
+      image: selfCareImage,
     },
     {
       title: "Join the Materna community",
-      image: "https://via.placeholder.com/150?text=Community",
+      image: welcome,
     },
     {
       title: "Connect with other moms",
-      image: "https://via.placeholder.com/150?text=Connect",
+      image: connect,
     },
     {
-      title: "All your needs met pre and post birth",
-      image: "https://via.placeholder.com/150?text=Support",
+      title: "All your needs met for pregnancy and postpartem",
+      image: needs,
     },
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-r from-[#f5f7fa] to-[#e3ebf4] font-sans">
@@ -78,9 +84,29 @@ export default function Signup() {
       </div>
 
       {/* Right: Carousel Section */}
-      <div className="flex-1 bg-gradient-to-b from-[#d9e7f0] to-[#f5f7fa] px-10 py-8 overflow-hidden hidden md:flex flex-col items-center justify-center text-center transition-all duration-500">
-        <img src={slides[currentSlide].image} alt="" className="w-40 h-40 object-cover rounded-2xl shadow-md mb-6" />
-        <h2 className="text-2xl font-bold text-[#234451]">{slides[currentSlide].title}</h2>
+      <div
+        className="relative flex-1 bg-cover bg-center bg-no-repeat hidden md:flex flex-col items-center justify-center text-center transition-all duration-500"
+        style={{
+          backgroundImage: `url('${slides[currentSlide].image}')`,
+        }}
+      >
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#234451] font-bold py-2 px-3 rounded-full shadow-md"
+        >
+          ‹
+        </button>
+
+        <div className="bg-white/70 p-6 rounded-2xl shadow-lg mt-16 mb-auto mx-6">
+          <h2 className="text-2xl font-bold text-[#234451]">{slides[currentSlide].title}</h2>
+        </div>
+
+        <button
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#234451] font-bold py-2 px-3 rounded-full shadow-md"
+        >
+          ›
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import base from "../assets/base.svg"
 
 export default function Login() {
   return (
@@ -41,17 +42,18 @@ export default function Login() {
         </p>
       </div>
 
-      {/* Right: Scrollable Section */}
-      <div className="flex-1 bg-gradient-to-b from-[#d9e7f0] to-[#f5f7fa] px-10 py-8 overflow-y-auto hidden md:flex flex-col items-center justify-center text-center">
-        <h2 className="text-2xl font-bold text-[#234451]">Welcome back to Materna!</h2>
-        <p className="text-sm text-[#234451] mt-2 max-w-md">
-          Continue tracking your health, earning points, and growing with the community.
-        </p>
-        <div className="mt-10 grid grid-cols-2 gap-4">
-          <div className="w-36 h-36 bg-white/50 rounded-2xl shadow-md" />
-          <div className="w-36 h-36 bg-white/50 rounded-2xl shadow-md" />
-          <div className="w-36 h-36 bg-white/50 rounded-2xl shadow-md" />
-          <div className="w-36 h-36 bg-white/50 rounded-2xl shadow-md" />
+      {/* Right: Static Welcome Section */}
+      <div
+        className="flex-1 bg-cover bg-center bg-no-repeat px-10 py-8 hidden md:flex flex-col items-center justify-center text-center"
+        style={{
+          backgroundImage: base,
+        }}
+      >
+        <div className="bg-white/70 p-6 rounded-2xl shadow-lg">
+          <h2 className="text-2xl font-bold text-[#234451]">Welcome back, mama!</h2>
+          <p className="text-sm text-[#234451] mt-2 max-w-md">
+            We’ve missed you. Pick up where you left off.
+          </p>
         </div>
       </div>
     </div>
