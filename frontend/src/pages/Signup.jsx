@@ -92,7 +92,7 @@ export default function Signup() {
       >
         <button
           onClick={handlePrev}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#234451] font-bold py-2 px-3 rounded-full shadow-md"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-2xl text-[#234451] font-bold py-3 px-4 rounded-full shadow-md"
         >
           ‹
         </button>
@@ -103,7 +103,7 @@ export default function Signup() {
 
         <button
           onClick={handleNext}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-[#234451] font-bold py-2 px-3 rounded-full shadow-md"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-2xl text-[#234451] font-bold py-3 px-4 rounded-full shadow-md"
         >
           ›
         </button>

@@ -46,7 +46,7 @@ export default function Login() {
       <div
         className="flex-1 bg-cover bg-center bg-no-repeat px-10 py-8 hidden md:flex flex-col items-center justify-center text-center"
         style={{
-          backgroundImage: base,
+          backgroundImage: `url(${base})`,
         }}
       >
         <div className="bg-white/70 p-6 rounded-2xl shadow-lg">
