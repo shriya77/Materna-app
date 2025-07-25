@@ -20,6 +20,8 @@ def symptom_list(request):
 
     user_instance = request.user
 
+    print(user_instance)
+
     if request.method == 'GET':
         symptoms = SymptomLog.objects.filter(user = user_instance)
         serializer = SymptomSerializer(symptoms, many=True)
@@ -28,10 +30,11 @@ def symptom_list(request):
     if request.method == "POST":
         serializer = SymptomSerializer(data=request.data)
         if serializer.is_valid():
+            serializer.save(user=user_instance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         else:
-            return JsonResponse({'detail': 'Valid data required.'}, status=status.HTTP_204_NO_CONTENT) #TODO Not sure what status to set to
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) #TODO Not sure what status to set to
         
 @api_view(['GET','PUT', 'DELETE'])
 def symptom_detail(request, id):

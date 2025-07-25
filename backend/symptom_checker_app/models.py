@@ -40,5 +40,5 @@ class SymptomLog(models.Model):
     )
 
     def __str__(self):
-        return f"{self.user} - {self.type} ({self.severity})"
+        return f"{self.user} - {self.type} ({self.severity}) (Symptom ID: {self.id})"
 
