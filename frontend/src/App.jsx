@@ -6,6 +6,8 @@ import Journal from "./pages/Journal";
 import Normal from "./pages/SOS";
 import Wellness from "./pages/Wellness";
 import Community from "./pages/Community";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/normal" element={<Normal />} />
           <Route path="/wellness" element={<Wellness />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

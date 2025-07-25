@@ -61,8 +61,8 @@ export const Navbar = () => {
         </div>
 
         <Link
-          to="/login"
-          className="hidden md:inline-block px-4 py-2 text-sm font-medium text-[#234451] bg-primary rounded hover:bg-primary/90 transition-colors duration-300"
+          to="/signup"
+          className="hidden md:inline-block px-4 py-2 text-sm font-semibold text-white bg-[#a48bc3] rounded-xl hover:bg-[#9771bc] transition"
         >
           Login / Sign Up
         </Link>
@@ -98,8 +98,8 @@ export const Navbar = () => {
               </Link>
             ))}
             <Link
-              to="/login"
-              className="text-[#234451] hover:text-primary transition-colors duration-300 text-lg font-sans"
+              to="/signup"
+              className="text-[#a48bc3] hover:text-[#9771bc] transition text-lg font-semibold"
               onClick={() => setIsMenuOpen(false)}
             >
               Login / Sign Up
