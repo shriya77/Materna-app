@@ -11,7 +11,13 @@ class CustomUserProfile(AbstractUser):
     due_date = models.DateField(null=True, blank=True, help_text="Expected due date for pregnant users.")
     pregnancy_week = models.PositiveIntegerField(null=True, blank=True, help_text="Current week of pregnancy.")
     doctor_info = models.TextField(null=True, blank=True, help_text="Information about the user's doctor.")
-
+    
+    status = models.CharField(max_length=50, null=True, blank=True, help_text="Maternal status.")
+    emergency = models.CharField(max_length=20, null=True, blank=True, help_text="Emergency contact information.")
+    partner_email = models.EmailField(null=True, blank=True, help_text="Partner's email for shared access.")
+    tag1 = models.CharField(max_length=50, null=True, blank=True, help_text="First profile tag.")
+    tag2 = models.CharField(max_length=50, null=True, blank=True, help_text="Second profile tag.")
+    
     
     def __str__(self):
         return self.username
