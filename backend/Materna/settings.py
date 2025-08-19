@@ -48,11 +48,13 @@ INSTALLED_APPS = [
     'symptom_checker_app', # Symptom Checker app
     'users_app',  # User Profiles, as an app for centralized user management,
     'community_forum_app',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     #'Materna.firebase_auth_middleware.FirebaseAuthMiddleware',
