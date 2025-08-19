@@ -145,3 +145,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',  
     ],
 }
+
+CORS_ALLOW_ALL_ORIGINS = False
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5175"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:5175"]
