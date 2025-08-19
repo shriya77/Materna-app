@@ -148,17 +148,41 @@ export default function UserProfile() {
 
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
+useEffect(() => {
+  let isMounted = true;
+
+  (async () => {
     const user = auth.currentUser;
-    if (user) {
-      setUserData({
-        name: user.displayName || "Mama",
-        email: user.email || "No email",
-        photo:
-          user.photoURL && user.photoURL.trim() !== "" ? user.photoURL : "",
+    if (!user) return;
+
+    try {
+      const token = await user.getIdToken(true); // fresh ID token
+      const res = await fetch("http://localhost:8000/api/profile/", {
+        headers: { Authorization: `Bearer ${token}` },
       });
+      if (!res.ok) throw new Error(`GET /api/profile/ ${res.status}`);
+
+      const data = await res.json();
+
+      if (!isMounted) return;
+      // map snake_case from backend -> your camelCase UI fields
+      setUserData((prev) => ({
+        ...prev,
+        ...data,
+        name: `${data.first_name ?? ''} ${data.last_name ?? ''}`.trim(),
+        email: data.email ?? prev?.email ?? "",
+        phone: data.phone ?? prev?.phone ?? "",
+        dob: data.dob ?? prev?.dob ?? "",
+        dueDate: data.due_date ?? prev?.dueDate ?? "",
+        provider: data.doctor_info ?? prev?.provider ?? "",
+      }));
+    } catch (err) {
+      console.error("Failed to fetch profile:", err);
     }
-  }, [auth]);
+  })();
+
+  return () => { isMounted = false; };
+}, [auth]);
 
   const handleLogout = async () => {
     try {
@@ -320,10 +344,22 @@ export default function UserProfile() {
                     onClick={async () => {
                       try {
                         if (auth.currentUser) {
-                          await updateProfile(auth.currentUser, {
-                            displayName: userData.name,
-                            photoURL: userData.photo,
+                          const res = await fetch("http://localhost:8000/api/profile/", {
+                            method: "PUT",
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+                            },
+                            body: JSON.stringify({
+                              first_name: userData.name.split(' ')[0],
+                              last_name: userData.name.split(' ').slice(1).join(' '),
+                              email: userData.email,
+                              dob: userData.dob,
+                            }),
                           });
+                          if (!res.ok) throw new Error(`PUT /api/profile/ ${res.status}`);
+
+                          // Handle the optional email update with Firebase
                           if (auth.currentUser.email !== userData.email) {
                             await updateEmail(auth.currentUser, userData.email);
                           }
@@ -332,9 +368,7 @@ export default function UserProfile() {
                         }
                       } catch (error) {
                         console.error("Error updating profile:", error);
-                        toast.error(
-                          "Failed to save changes. Please try again.",
-                        );
+                        toast.error("Failed to save changes. Please try again. ");
                       }
                     }}
                   >
@@ -442,15 +476,31 @@ export default function UserProfile() {
                 ) : (
                   <button
                     className="bg-[#a48bc3] text-white px-6 py-2 rounded-full text-base font-semibold hover:brightness-110 transition-all"
-                    onClick={() => {
+                    onClick={async () => {
                       try {
+                        const res = await fetch("http://localhost:8000/api/profile/", {
+                          method: "PUT",
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+                          },
+                          body: JSON.stringify({
+                            status: userData.status,
+                            due_date: userData.dueDate,
+                            doctor_info: userData.provider,
+                            emergency: userData.emergency,
+                            partner_email: userData.partnerEmail,
+                            tag1: userData.tag1, // Tag 1 and 2 are in the "Maternal Journey" section
+                            tag2: userData.tag2,
+                          }),
+                        });
+                        if (!res.ok) throw new Error(`PUT /api/profile/ ${res.status}`);
+
                         toast.success("Changes saved successfully!");
                         setIsEditingJourney(false);
                       } catch (error) {
                         console.error("Error saving changes:", error);
-                        toast.error(
-                          "Failed to save changes. Please try again.",
-                        );
+                        toast.error("Failed to save changes. Please try again.");
                       }
                     }}
                   >
