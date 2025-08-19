@@ -31,7 +31,15 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         CustomUser = get_user_model()
         try:
             # Use firebase_uid for get_or_create, as it's designed to be unique.
-            user, created = CustomUser.objects.get_or_create(firebase_uid=uid)
+            user, created = CustomUser.objects.get_or_create(
+                firebase_uid=uid,
+                defaults={
+                    'username': uid,
+                    'email': decoded_token.get('email', ''),
+                    'first_name': decoded_token.get('name', '').split(' ')[0] if decoded_token.get('name') else '',
+                    'last_name': ' '.join(decoded_token.get('name', '').split(' ')[1:]) if decoded_token.get('name') else '',
+                }
+            )
 
             if created:
                 print(f"New Django user created for Firebase UID: {uid}")
