@@ -17,6 +17,20 @@ class CustomUserProfile(AbstractUser):
     partner_email = models.EmailField(null=True, blank=True, help_text="Partner's email for shared access.")
     tag1 = models.CharField(max_length=50, null=True, blank=True, help_text="First profile tag.")
     tag2 = models.CharField(max_length=50, null=True, blank=True, help_text="Second profile tag.")
+    dob = models.DateField(null=True, blank=True, help_text="User's date of birth.")
+    phone_number = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+        help_text="Phone number in E.164 or local format.",
+        validators=[
+            RegexValidator(
+                regex=r'^\+?[0-9()\-\s]{7,20}$',
+                message="Enter a valid phone number (e.g., +15551234567)."
+            )
+        ],
+    )
+    # If you want phone numbers to be unique across users, add: unique=True
     
     
     def __str__(self):
