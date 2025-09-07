@@ -171,7 +171,7 @@ useEffect(() => {
         ...data,
         name: `${data.first_name ?? ''} ${data.last_name ?? ''}`.trim(),
         email: data.email ?? prev?.email ?? "",
-        phone: data.phone ?? prev?.phone ?? "",
+        phone: data.phone_number ?? prev?.phone_number ?? "",
         dob: data.dob ?? prev?.dob ?? "",
         dueDate: data.due_date ?? prev?.dueDate ?? "",
         provider: data.doctor_info ?? prev?.provider ?? "",
@@ -355,6 +355,7 @@ useEffect(() => {
                               last_name: userData.name.split(' ').slice(1).join(' '),
                               email: userData.email,
                               dob: userData.dob,
+                              phone_number: userData.phone_number,
                             }),
                           });
                           if (!res.ok) throw new Error(`PUT /api/profile/ ${res.status}`);
