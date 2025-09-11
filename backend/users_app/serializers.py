@@ -21,6 +21,8 @@ class CustomUserProfileSerializer(serializers.ModelSerializer):
             'emergency',
             'partner_email',
             'tag1',
+            'dob',
+            'phone_number',
             'tag2']
 
     def get_name(self, obj):
